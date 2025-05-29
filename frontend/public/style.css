@@ -384,110 +384,25 @@ button {
     color: white;
 }
 
-
-
-
-
-/* 
-
-
-
-
-
-
-Modal Styles
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    overflow-y: auto;
-}
-
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    width: 90%;
-    max-width: 700px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    position: relative;
-}
-
-.close-modal {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: var(--dark-gray);
-    transition: var(--transition);
-}
-
-.close-modal:hover {
-    color: var(--error-color);
-}
-
-.image-note {
-    display: block;
-    color: var(--dark-gray);
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-}
-
-Make form groups stack vertically in modal
-.modal-content .form-group {
-    margin-bottom: 1.25rem;
-}
-
-Responsive adjustments
-@media (max-width: 768px) {
-    .modal-content {
-        margin: 10% auto;
-        padding: 1.5rem;
-        width: 95%;
-    }
-} */
-
-
-
-
+/* Unified Modal Styles */
 
 /* Modal container */
 .modal {
     display: none;
     position: fixed;
-    top: 0;
+    z-index: 1000;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6);
     overflow-y: auto;
     min-height: 100%;
     padding: 20px 0;
-}
 
-.modal-content {
-    background-color: white;
-    margin: 2% auto;
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    width: 90%;
-    max-width: 700px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    position: relative;
-    overflow: auto;
-    max-height: 90vh;
-    padding-top: 3.5rem;
-    /* Space for close button */
+    /* Flex center for popup modals */
+    justify-content: center;
+    align-items: center;
 }
 
 /* Fix for mobile viewport */
@@ -497,11 +412,43 @@ Responsive adjustments
     }
 }
 
+/* Main modal content (form or confirmation popup) */
+.modal-content {
+    background-color: #fff;
+    margin: 2% auto;
+    padding: 2rem;
+    border-radius: var(--border-radius, 10px);
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: auto;
+    max-height: 90vh;
+    padding-top: 3.5rem;
+    text-align: left;
+}
+
+/* Compact modal override for confirmation */
+#confirmDeleteModal .modal-content {
+    max-width: 400px;
+    text-align: center;
+    padding: 20px 30px;
+    padding-top: 2rem;
+}
+
 /* Scrollable form content */
 .modal-form-container {
     max-height: calc(90vh - 4rem);
     overflow-y: auto;
     padding-right: 8px;
+}
+
+/* Modal header */
+.modal-header {
+    padding: 1.5rem 1.5rem 1rem;
+    position: relative;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
 }
 
 /* Top-right 'X' close button */
@@ -533,10 +480,35 @@ Responsive adjustments
     transform: scale(0.95);
 }
 
-/* Optional: Modal header */
-.modal-header {
-    padding: 1.5rem 1.5rem 1rem;
-    position: relative;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 1.5rem;
+/* Modal action buttons (confirmation) */
+.modal-actions {
+    margin-top: 1.5rem;
+}
+
+.modal-actions button {
+    margin: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.modal-actions .confirm {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.modal-actions .confirm:hover {
+    background-color: #c0392b;
+}
+
+.modal-actions .cancel {
+    background-color: #bdc3c7;
+    color: black;
+}
+
+.modal-actions .cancel:hover {
+    background-color: #95a5a6;
 }

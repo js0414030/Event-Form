@@ -392,32 +392,49 @@ function setupEditButtons() {
   });
 }
 
-// Set up delete buttons
+
+// delete pop up logic update
+
+let deleteEventId = null;
+
 function setupDeleteButtons() {
   document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      if (confirm('Are you sure you want to delete this event?')) {
-        try {
-          const response = await fetch(`/api/events/${e.target.dataset.id}`, {
-            method: 'DELETE'
-          });
-
-          const result = await response.json();
-
-          if (!response.ok) {
-            throw new Error(result.error || 'Failed to delete event');
-          }
-
-          showNotification('Event deleted successfully!');
-          loadEvents();
-        } catch (error) {
-          showNotification(error.message, true);
-          console.error('Delete error:', error);
-        }
-      }
+    btn.addEventListener('click', (e) => {
+      deleteEventId = e.target.dataset.id;
+      document.getElementById('confirmDeleteModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     });
   });
 }
+
+// Confirm & cancel handlers
+document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+  if (!deleteEventId) return;
+
+  try {
+    const response = await fetch(`/api/events/${deleteEventId}`, { method: 'DELETE' });
+    const result = await response.json();
+
+    if (!response.ok) throw new Error(result.error || 'Failed to delete event');
+
+    showNotification('Event deleted successfully!');
+    loadEvents();
+  } catch (error) {
+    showNotification(error.message, true);
+    console.error('Delete error:', error);
+  } finally {
+    closeDeleteModal();
+  }
+});
+
+document.getElementById('cancelDeleteBtn').addEventListener('click', closeDeleteModal);
+
+function closeDeleteModal() {
+  deleteEventId = null;
+  document.getElementById('confirmDeleteModal').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
 
 // Update pagination UI
 function updatePagination(total, totalPages) {
