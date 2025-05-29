@@ -465,6 +465,7 @@ const closeModalButtons = document.querySelectorAll('.close-modal');
 closeModalButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     editModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
   });
 });
 
@@ -472,6 +473,7 @@ closeModalButtons.forEach(btn => {
 window.addEventListener('click', (e) => {
   if (e.target === editModal) {
     editModal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
   }
 });
 
